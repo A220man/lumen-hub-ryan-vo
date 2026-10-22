@@ -1,0 +1,72 @@
+{
+  "realm": "lumen-hub",
+  "enabled": true,
+  "displayName": "Lumen Hub",
+  "registrationAllowed": true,
+  "loginWithEmailAllowed": true,
+  "rememberMe": true,
+  "verifyEmail": false,
+  "resetPasswordAllowed": true,
+  "editUsernameAllowed": false,
+  "bruteForceProtected": true,
+  "roles": {
+    "realm": [
+      {
+        "name": "admin",
+        "description": "Administrator with full access"
+      },
+      {
+        "name": "user",
+        "description": "Standard user"
+      },
+      {
+        "name": "operator",
+        "description": "Operator with elevated permissions"
+      }
+    ],
+    "client": {}
+  },
+  "clients": [
+    {
+      "clientId": "lumen-hub-backend",
+      "name": "Lumen Hub Backend",
+      "description": "Backend API client",
+      "enabled": true,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "backend-secret-change-in-production",
+      "redirectUris": ["http://localhost:5173/*", "http://127.0.0.1:5173/*"],
+      "webOrigins": ["http://localhost:5173", "http://127.0.0.1:5173"],
+      "protocol": "openid-connect",
+      "publicClient": false,
+      "serviceAccountsEnabled": true,
+      "authorizationServicesEnabled": true,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "attributes": {
+        "access.token.lifespan": "1800",
+        "client.secret.creation.time": "1704067200"
+      }
+    },
+    {
+      "clientId": "lumen-hub-frontend",
+      "name": "Lumen Hub Frontend",
+      "description": "Frontend SPA client",
+      "enabled": true,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "frontend-secret-change-in-production",
+      "redirectUris": ["http://localhost:5173/*", "http://127.0.0.1:5173/*"],
+      "webOrigins": ["http://localhost:5173", "http://127.0.0.1:5173"],
+      "protocol": "openid-connect",
+      "publicClient": true,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "attributes": {
+        "pkce.code.challenge.method": "S256"
+      }
+    }
+  ],
+  "groups": [],
+  "identityProviders": []
+}

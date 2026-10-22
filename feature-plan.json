@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "current_feature": "project-skeleton",
+  "features": [
+    {
+      "id": "project-skeleton",
+      "title": "FastAPI/React project skeleton with basic structure",
+      "status": "done",
+      "acceptance": [
+        "Backend FastAPI app runs with health endpoint",
+        "Frontend React+Vite+TS app builds and runs",
+        "Docker compose with backend, frontend, PostgreSQL, Keycloak",
+        "Basic CI workflow runs backend/frontend tests"
+      ],
+      "implementation": [
+        "backend/app/main.py",
+        "backend/app/core/config.py",
+        "backend/app/api/health.py",
+        "backend/requirements.txt",
+        "frontend/package.json",
+        "frontend/tsconfig.json",
+        "frontend/vite.config.ts",
+        "frontend/src/main.tsx",
+        "frontend/src/App.tsx",
+        "docker-compose.yaml",
+        ".github/workflows/ci.yml"
+      ],
+      "tests": [
+        "backend/tests/test_health.py",
+        "frontend/src/__tests__/App.test.tsx"
+      ]
+    },
+    {
+      "id": "auth-foundation",
+      "title": "OIDC/Keycloak authentication foundation",
+      "status": "planned",
+      "acceptance": [
+        "Keycloak realm import works",
+        "Backend validates JWT tokens",
+        "Frontend login/logout flow works",
+        "Protected API endpoints require valid token"
+      ],
+      "implementation": [],
+      "tests": []
+    },
+    {
+      "id": "sms-otp-templates",
+      "title": "SMS OTP template management with newline support (Issue #6435)",
+      "status": "planned",
+      "acceptance": [
+        "Create/update SMS templates with newlines",
+        "WebOTP-compatible format validation",
+        "Template preview shows rendered output"
+      ],
+      "implementation": [],
+      "tests": []
+    },
+    {
+      "id": "project-health-monitoring",
+      "title": "Postgres project health monitoring (Issue #40617)",
+      "status": "planned",
+      "acceptance": [
+        "Detect missing pg_pgrst_no_exposed_schemas",
+        "Auto-create required schemas on project init",
+        "Health dashboard shows PostgREST status"
+      ],
+      "implementation": [],
+      "tests": []
+    },
+    {
+      "id": "smtp-office365-support",
+      "title": "Custom SMTP with Office 365/Outlook support (Issue #34425)",
+      "status": "planned",
+      "acceptance": [
+        "TLS 1.2+ configuration for Office 365",
+        "Connection timeout handling",
+        "Test email sending works"
+      ],
+      "implementation": [],
+      "tests": []
+    }
+  ]
+}
