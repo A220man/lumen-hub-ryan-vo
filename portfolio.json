@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "name": "lumen-hub-ryan-vo",
+  "owner": "A220man",
+  "email": "ryandtvo@gmail.com",
+  "domain": "AI/ML developer tools",
+  "summary": "Work in progress: lumen-hub-ryan-vo",
+  "workflows": [
+    "Manage SMS OTP templates with newline support for WebOTP API compliance",
+    "Monitor PostgreSQL project health and auto-resolve pg_pgrst_no_exposed_schemas errors",
+    "Configure custom SMTP with Office 365/Outlook TLS 1.2+ support"
+  ],
+  "auth": "oidc-keycloak-saml-broker",
+  "llm_providers": [
+    "openai-compatible",
+    "anthropic",
+    "gemini",
+    "ollama"
+  ],
+  "status": "work-in-progress"
+}
