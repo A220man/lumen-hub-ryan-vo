@@ -4,7 +4,7 @@ Each round completes one feature or repair. Future items are planned, not implem
 
 ## Current round
 
-project-skeleton
+auth-foundation
 
 ## Roadmap
 
@@ -24,13 +24,17 @@ Tests: `backend/tests/test_health.py`, `frontend/src/__tests__/App.test.tsx`
 
 ### auth-foundation — OIDC/Keycloak authentication foundation
 
-Status: planned
+Status: done
 
 Acceptance:
 - Keycloak realm import works
 - Backend validates JWT tokens
 - Frontend login/logout flow works
 - Protected API endpoints require valid token
+
+Implementation: `backend/app/core/auth.py`, `backend/app/api/auth.py`, `backend/app/core/security.py`, `frontend/src/hooks/useAuth.tsx`, `frontend/src/services/auth.ts`, `frontend/src/pages/Login.tsx`
+
+Tests: `backend/tests/test_auth.py`, `frontend/src/__tests__/Auth.test.tsx`
 
 ### sms-otp-templates — SMS OTP template management with newline support (Issue #6435)
 

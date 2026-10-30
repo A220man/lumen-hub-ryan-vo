@@ -1,11 +1,13 @@
-/** Authentication hook. */
+/** Authentication hook with Keycloak/OIDC integration. */
 
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, ReactNode, useCallback } from "react";
 import type { User, AuthState } from "../types";
+import { loadAuth, saveAuth, clearAuth, getToken, initiateLogin, exchangeCodeForToken, fetchUserInfo, logout as authLogout } from "../services/auth";
 
 interface AuthContextType extends AuthState {
-  login: (email: string, password: string) => Promise<void>;
-  logout: () => void;
+  login: () => Promise<void>;
+  logout: () => Promise<void>;
+  handleCallback: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -21,7 +23,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const initAuth = async () => {
       try {
-        setState((prev) => ({ ...prev, isLoading: false }));
+        const { token, user } = loadAuth();
+        if (token && user) {
+          setState({
+            user,
+            isAuthenticated: true,
+            isLoading: false,
+            error: null,
+          });
+        } else {
+          setState((prev) => ({ ...prev, isLoading: false }));
+        }
       } catch {
         setState((prev) => ({ ...prev, isLoading: false }));
       }
@@ -29,11 +41,43 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     initAuth();
   }, []);
 
-  const login = async (email: string, password: string) => {
+  const login = useCallback(async () => {
     setState((prev) => ({ ...prev, isLoading: true, error: null }));
     try {
+      await initiateLogin();
+    } catch (err) {
+      setState((prev) => ({
+        ...prev,
+        isLoading: false,
+        error: err instanceof Error ? err.message : "Login failed",
+      }));
+    }
+  }, []);
+
+  const handleCallback = useCallback(async () => {
+    setState((prev) => ({ ...prev, isLoading: true, error: null }));
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const code = urlParams.get("code");
+      const error = urlParams.get("error");
+
+      if (error) {
+        throw new Error(`OAuth error: ${error}`);
+      }
+
+      if (!code) {
+        throw new Error("No authorization code received");
+      }
+
+      // Clean up URL
+      window.history.replaceState({}, document.title, window.location.pathname);
+
+      const tokenResponse = await exchangeCodeForToken(code);
+      const user = await fetchUserInfo(tokenResponse.access_token);
+
+      saveAuth(tokenResponse.access_token, user);
       setState({
-        user: { id: "1", email, name: "Demo User", roles: ["user"] },
+        user,
         isAuthenticated: true,
         isLoading: false,
         error: null,
@@ -42,22 +86,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setState((prev) => ({
         ...prev,
         isLoading: false,
-        error: err instanceof Error ? err.message : "Login failed",
+        error: err instanceof Error ? err.message : "Authentication failed",
       }));
     }
-  };
+  }, []);
 
-  const logout = () => {
-    setState({
-      user: null,
-      isAuthenticated: false,
-      isLoading: false,
-      error: null,
-    });
-  };
+  const logout = useCallback(async () => {
+    setState((prev) => ({ ...prev, isLoading: true }));
+    try {
+      await authLogout();
+    } finally {
+      clearAuth();
+      setState({
+        user: null,
+        isAuthenticated: false,
+        isLoading: false,
+        error: null,
+      });
+    }
+  }, []);
 
   return (
-    <AuthContext.Provider value={{ ...state, login, logout }}>
+    <AuthContext.Provider value={{ ...state, login, logout, handleCallback }}>
       {children}
     </AuthContext.Provider>
   );
