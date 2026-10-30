@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "current_feature": "project-skeleton",
+  "current_feature": "auth-foundation",
   "features": [
     {
       "id": "project-skeleton",
@@ -33,15 +33,25 @@
     {
       "id": "auth-foundation",
       "title": "OIDC/Keycloak authentication foundation",
-      "status": "planned",
+      "status": "done",
       "acceptance": [
         "Keycloak realm import works",
         "Backend validates JWT tokens",
         "Frontend login/logout flow works",
         "Protected API endpoints require valid token"
       ],
-      "implementation": [],
-      "tests": []
+      "implementation": [
+        "backend/app/core/auth.py",
+        "backend/app/api/auth.py",
+        "backend/app/core/security.py",
+        "frontend/src/hooks/useAuth.tsx",
+        "frontend/src/services/auth.ts",
+        "frontend/src/pages/Login.tsx"
+      ],
+      "tests": [
+        "backend/tests/test_auth.py",
+        "frontend/src/__tests__/Auth.test.tsx"
+      ]
     },
     {
       "id": "sms-otp-templates",
