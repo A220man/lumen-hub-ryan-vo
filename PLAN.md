@@ -4,7 +4,7 @@ Each round completes one feature or repair. Future items are planned, not implem
 
 ## Current round
 
-auth-foundation
+sms-otp-templates
 
 ## Roadmap
 
@@ -34,16 +34,20 @@ Acceptance:
 
 Implementation: `backend/app/core/auth.py`, `backend/app/api/auth.py`, `backend/app/core/security.py`, `frontend/src/hooks/useAuth.tsx`, `frontend/src/services/auth.ts`, `frontend/src/pages/Login.tsx`
 
-Tests: `backend/tests/test_auth.py`, `frontend/src/__tests__/Auth.test.tsx`
+Tests: `backend/tests/test_auth.py`, `frontend/src/__tests__/Auth.test.tsx`, `frontend/src/__tests__/useAuth.test.tsx`
 
 ### sms-otp-templates — SMS OTP template management with newline support (Issue #6435)
 
-Status: planned
+Status: done
 
 Acceptance:
 - Create/update SMS templates with newlines
 - WebOTP-compatible format validation
 - Template preview shows rendered output
+
+Implementation: `backend/app/api/sms_templates.py`, `backend/app/main.py`, `frontend/src/types/index.ts`, `frontend/src/services/smsTemplates.ts`, `frontend/src/components/smsTemplates/SMSTemplateList.tsx`, `frontend/src/components/smsTemplates/SMSTemplateForm.tsx`, `frontend/src/pages/SMSTemplates.tsx`, `frontend/src/App.tsx`, `frontend/src/index.css`
+
+Tests: `backend/tests/test_sms_templates.py`, `frontend/src/__tests__/Auth.test.tsx`, `frontend/src/__tests__/useAuth.test.tsx`
 
 ### project-health-monitoring — Postgres project health monitoring (Issue #40617)
 

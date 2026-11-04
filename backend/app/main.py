@@ -5,8 +5,7 @@ from typing import AsyncGenerator
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
-from app.api import auth, health
+from app.api import auth, health, sms_templates
 from app.core.config import get_settings
 
 
@@ -43,7 +42,7 @@ def create_app() -> FastAPI:
         allow_headers=["*"],
     )
 
-    # Include routers
+    app.include_router(sms_templates.router, prefix="/api/v1", tags=["sms-templates"])
     app.include_router(auth.router, prefix="/api/v1", tags=["auth"])
     app.include_router(health.router, prefix="/api/v1", tags=["health"])
 
