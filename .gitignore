@@ -61,3 +61,11 @@ coverage/
 *.egg-info/
 *.whl
 *.tar.gz
+*.pyc
+*.db-wal
+*.db-shm
+*.sqlite-wal
+*.sqlite-shm
+*.sqlite3-wal
+*.sqlite3-shm
+data/media/

@@ -2,10 +2,11 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "./hooks/useAuth";
 import { Dashboard } from "./pages/Dashboard";
 import { Login } from "./pages/Login";
+import { SMSTemplatesPage } from "./pages/SMSTemplates";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 
 function AppRoutes() {
-  const { handleCallback, isLoading } = useAuth();
+  const { handleCallback } = useAuth();
 
   // Handle OAuth callback
   if (window.location.search.includes("code=") || window.location.search.includes("error=")) {
@@ -24,6 +25,14 @@ function AppRoutes() {
           </ProtectedRoute>
         }
       />
+      <Route
+        path="/sms-templates"
+        element={
+          <ProtectedRoute>
+            <SMSTemplatesPage />
+          </ProtectedRoute>
+        }
+      />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
@@ -37,6 +46,7 @@ function App() {
           <h1>Lumen Hub</h1>
           <nav>
             <a href="/">Dashboard</a>
+            <a href="/sms-templates">SMS Templates</a>
           </nav>
         </header>
         <main className="app-main">

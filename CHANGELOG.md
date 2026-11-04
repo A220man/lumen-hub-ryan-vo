@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.0 — work-in-progress checkpoint
+
+Partial code published for continued development. Known issues: STATUS.md.
+
 ## 1.1.0 — work-in-progress checkpoint
 
 Partial code published for continued development. Known issues: STATUS.md.
@@ -40,5 +44,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Frontend auth service for token exchange, user info fetch, and session management
 - Frontend login page redirects to Keycloak for authentication
 - Protected routes require valid JWT token
-- Backend auth tests: 4 passing
-- Frontend auth tests: 8 passing
+- Frontend auth tests: 11 passing (6 AuthService + 5 useAuth hook)
+
+## [1.1.0] - 2026-11-03
+
+### Added
+- SMS OTP Template Management (sms-otp-templates, Issue #6435)
+  - Backend API endpoints: `GET/POST /sms-templates`, `GET/PUT/DELETE /sms-templates/{name}`, `POST /sms-templates/validate`, `POST /sms-templates/preview`
+  - Template validation with WebOTP compatibility checks (requires `{otp}` or `{{otp}}` placeholder)
+  - Template preview with variable substitution supporting both `{var}` and `{{var}}` formats
+  - Newline support in template content
+  - Character count and SMS segment calculation (160 chars per segment)
+  - Role-based access: admin/operator for CRUD, admin for delete
+  - In-memory storage (database-ready for future migration)
+- Frontend SMS Templates page with:
+  - Template list view with edit/preview/delete actions
+  - Create/edit form with real-time validation
+  - Live preview with variable substitution
+  - Validation status display (errors, warnings, WebOTP compatibility)
+  - Navigation integrated into app header
+- Backend tests: 6 new tests for SMS template validation, rendering, and newline support
+- Frontend builds successfully with new components
+
+### Changed
+- Added SMS templates router to FastAPI app (`/api/v1/sms-templates`)
+- Extended frontend types with SMS template interfaces
+- Added SMS template service with API client functions
+- New UI components: `SMSTemplateList`, `SMSTemplateForm`, `SMSTemplatesPage`
+
+### Security
+- SMS template endpoints protected by role-based access control
