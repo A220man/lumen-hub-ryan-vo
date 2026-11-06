@@ -76,8 +76,7 @@
       ],
       "tests": [
         "backend/tests/test_sms_templates.py",
-        "frontend/src/__tests__/Auth.test.tsx",
-        "frontend/src/__tests__/useAuth.test.tsx"
+        "frontend/src/__tests__/SMSTemplateForm.test.tsx"
       ]
     },
     {

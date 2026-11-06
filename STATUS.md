@@ -2,11 +2,11 @@
 
 Work in progress; not a release-readiness or successful QA claim.
 
-Version: 1.2.0
+Version: 1.3.0
 
 ## Outstanding findings
 
-Sensitive snapshot file: backend/.env
+No completed independent review for this checkpoint.
 
 ## Next round
 

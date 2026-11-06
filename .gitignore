@@ -69,3 +69,5 @@ coverage/
 *.sqlite3-wal
 *.sqlite3-shm
 data/media/
+.turbo/
+**/data/media/

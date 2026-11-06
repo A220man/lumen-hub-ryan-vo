@@ -47,7 +47,7 @@ Acceptance:
 
 Implementation: `backend/app/api/sms_templates.py`, `backend/app/main.py`, `frontend/src/types/index.ts`, `frontend/src/services/smsTemplates.ts`, `frontend/src/components/smsTemplates/SMSTemplateList.tsx`, `frontend/src/components/smsTemplates/SMSTemplateForm.tsx`, `frontend/src/pages/SMSTemplates.tsx`, `frontend/src/App.tsx`, `frontend/src/index.css`
 
-Tests: `backend/tests/test_sms_templates.py`, `frontend/src/__tests__/Auth.test.tsx`, `frontend/src/__tests__/useAuth.test.tsx`
+Tests: `backend/tests/test_sms_templates.py`, `frontend/src/__tests__/SMSTemplateForm.test.tsx`
 
 ### project-health-monitoring — Postgres project health monitoring (Issue #40617)
 
