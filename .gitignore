@@ -71,3 +71,4 @@ coverage/
 data/media/
 .turbo/
 **/data/media/
+.venv*/
