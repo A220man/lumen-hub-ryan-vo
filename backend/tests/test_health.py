@@ -38,3 +38,15 @@ async def test_liveness_check() -> None:
     assert response.status_code == 200
     data = response.json()
     assert data["status"] == "alive"
+
+
+@pytest.mark.asyncio
+async def test_schema_health_check() -> None:
+    """Test schema health check endpoint."""
+    async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
+        response = await client.get("/api/v1/health/schema")
+    assert response.status_code == 200
+    data = response.json()
+    assert "status" in data
+    assert "schema_security" in data
+    assert "pg_pgrst_no_exposed_schemas" in data["schema_security"]
