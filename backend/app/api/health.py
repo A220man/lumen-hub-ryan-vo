@@ -47,6 +47,7 @@ async def schema_health_check() -> dict:
 
     Detects if pg_pgrst.no_exposed_schemas function is available,
     which prevents access to exposed database schemas.
+    Also checks if the pg_pgrst schema namespace exists.
     """
     settings = get_settings()
 
@@ -63,12 +64,33 @@ async def schema_health_check() -> dict:
     except Exception:
         function_exists = False
 
-    if function_exists:
+    # Check if pg_pgrst schema namespace exists
+    try:
+        async with AsyncSession(settings.database_url) as session:
+            result = await session.execute(
+                text("SELECT 1 FROM pg_namespace WHERE nspname = 'pg_pgrst'")
+            )
+            schema_exists = result.scalar() is not None
+    except Exception:
+        schema_exists = False
+
+    if function_exists and schema_exists:
         return {
             "status": "healthy",
             "schema_security": {
                 "pg_pgrst_no_exposed_schemas": True,
-                "detail": "pg_pgrst.no_exposed_schemas function is available",
+                "pg_pgrst_schema": True,
+                "detail": "pg_pgrst.no_exposed_schemas function is available and pg_pgrst schema exists",
+            },
+        }
+    elif function_exists:
+        # Function exists but schema doesn't - this is unusual
+        return {
+            "status": "degraded",
+            "schema_security": {
+                "pg_pgrst_no_exposed_schemas": True,
+                "pg_pgrst_schema": False,
+                "detail": "pg_pgrst.no_exposed_schemas function exists but pg_pgrst schema is missing",
             },
         }
     else:
@@ -76,6 +98,7 @@ async def schema_health_check() -> dict:
             "status": "degraded",
             "schema_security": {
                 "pg_pgrst_no_exposed_schemas": False,
+                "pg_pgrst_schema": schema_exists,
                 "detail": "pg_pgrst.no_exposed_schemas function is missing - schemas may be exposed",
             },
         }
