@@ -80,7 +80,7 @@ async def schema_health_check() -> dict:
             "schema_security": {
                 "pg_pgrst_no_exposed_schemas": True,
                 "pg_pgrst_schema": True,
-                "detail": "pg_pgrst.no_exposed_schemas function is available and pg_pgrst schema exists",
+                "detail": "pg_pgrst.no_exposed_schemas function is available and the pg_pgrst schema is properly configured",
             },
         }
     elif function_exists:
@@ -90,7 +90,7 @@ async def schema_health_check() -> dict:
             "schema_security": {
                 "pg_pgrst_no_exposed_schemas": True,
                 "pg_pgrst_schema": False,
-                "detail": "pg_pgrst.no_exposed_schemas function exists but pg_pgrst schema is missing",
+                "detail": "pg_pgrst.no_exposed_schemas function exists but the pg_pgrst schema namespace is missing - schema security may be compromised",
             },
         }
     else:
@@ -99,6 +99,6 @@ async def schema_health_check() -> dict:
             "schema_security": {
                 "pg_pgrst_no_exposed_schemas": False,
                 "pg_pgrst_schema": schema_exists,
-                "detail": "pg_pgrst.no_exposed_schemas function is missing - schemas may be exposed",
+                "detail": "pg_pgrst.no_exposed_schemas function is missing - database schemas are exposed and may be accessible without restriction",
             },
         }
