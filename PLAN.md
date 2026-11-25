@@ -51,12 +51,16 @@ Tests: `backend/tests/test_sms_templates.py`, `frontend/src/__tests__/SMSTemplat
 
 ### project-health-monitoring — Postgres project health monitoring (Issue #40617)
 
-Status: planned
+Status: in_progress
 
 Acceptance:
 - Detect missing pg_pgrst_no_exposed_schemas
 - Auto-create required schemas on project init
 - Health dashboard shows PostgREST status
+
+Implementation: `backend/app/api/health.py - schema_health_check endpoint with pg_pgrst_no_exposed_schemas detection`
+
+Tests: `backend/tests/test_health.py::test_schema_health_check`
 
 ### smtp-office365-support — Custom SMTP with Office 365/Outlook support (Issue #34425)
 

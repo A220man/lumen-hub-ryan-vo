@@ -82,14 +82,18 @@
     {
       "id": "project-health-monitoring",
       "title": "Postgres project health monitoring (Issue #40617)",
-      "status": "planned",
+      "status": "in_progress",
       "acceptance": [
         "Detect missing pg_pgrst_no_exposed_schemas",
         "Auto-create required schemas on project init",
         "Health dashboard shows PostgREST status"
       ],
-      "implementation": [],
-      "tests": []
+      "implementation": [
+        "backend/app/api/health.py - schema_health_check endpoint with pg_pgrst_no_exposed_schemas detection"
+      ],
+      "tests": [
+        "backend/tests/test_health.py::test_schema_health_check"
+      ]
     },
     {
       "id": "smtp-office365-support",
